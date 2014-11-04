@@ -16,3 +16,6 @@ end
 println(anagramSolution1("abcd","dcba"))
 println(anagramSolution1("abcd","cdba"))
 println(anagramSolution1("abcd","cdbi"))
+
+## does not take the frequency of a letter into account
+println(anagramSolution1("abcd","dcbaaaa")) # -> returns true, but no anagram
