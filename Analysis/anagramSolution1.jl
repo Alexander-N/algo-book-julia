@@ -1,4 +1,6 @@
 function anagramSolution1(string1, string2)
+    if length(string1) != length(string2)
+        return false
     for s1 in string1
         found = false
         for s2 in string2
