@@ -1,4 +1,8 @@
+using Base.Test
+
 function anagramSolution1(string1, string2)
+    #this function is incorrect for multiple occurences of a character 
+    
     if length(string1) != length(string2)
         return false
     end
@@ -16,7 +20,7 @@ function anagramSolution1(string1, string2)
     return true
 end
 
-println(anagramSolution1("abcd","dcba"))
-println(anagramSolution1("abcd","cdba"))
-println(anagramSolution1("abcd","cdbi"))
-println(anagramSolution1("abcd","dcbaaaa"))
+@test anagramSolution1("abcd","dcba") == true
+@test anagramSolution1("abcd","cdbi") == false
+@test anagramSolution1("abcd","dcbaaaa") == false
+@test anagramSolution1("aacc","accc")  == false
