@@ -1,4 +1,5 @@
 include("stack.jl")
+using myStack
 
 s=Stack()
 println(isempty(s))

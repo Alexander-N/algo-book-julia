@@ -1,3 +1,6 @@
+module myStack
+export Stack, isempty, push!, pop!, peek, size
+
 type Stack
     items::Array{Any,1}
     Stack() = new([])
@@ -27,4 +30,5 @@ end
 
 function size(S::Stack)
     size(S.items)
+end
 end
