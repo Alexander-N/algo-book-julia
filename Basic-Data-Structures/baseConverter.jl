@@ -1,5 +1,5 @@
 include("stack.jl")
-using myStack
+importall myStack
 using Base.Test
 
 function baseConverter(decNumber::Int64, base::Int64)

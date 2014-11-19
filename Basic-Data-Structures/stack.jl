@@ -31,4 +31,5 @@ end
 function size(S::Stack)
     size(S.items)
 end
+
 end
