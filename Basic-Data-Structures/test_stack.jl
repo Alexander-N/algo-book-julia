@@ -1,7 +1,7 @@
-include("stack.jl")
+include("dataStructs.jl")
 importall myStack
 
-s=Stack()
+s = Stack()
 println(isempty(s))
 push!(s,4)
 push!(s,"dog")

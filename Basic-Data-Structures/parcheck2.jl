@@ -1,4 +1,4 @@
-include("stack.jl")
+include("dataStructs.jl")
 importall myStack
 using Base.Test
 
