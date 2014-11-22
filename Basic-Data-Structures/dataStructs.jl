@@ -29,7 +29,7 @@ function peek(S::Stack)
 end
 
 function size(S::Stack)
-    size(S.items)
+    size(S.items)[1]
 end
 
 end
@@ -53,7 +53,7 @@ function isempty(Q::Queue)
 end
 
 function size(Q::Queue)
-    size(Q.items)
+    size(Q.items)[1]
 end
 
 function enqueue!(Q::Queue, item)
