@@ -101,3 +101,63 @@ function removeRear!(D::Deque)
 end
 
 end
+
+
+module myUnorderedList
+export Node, UnorderedList, add!, size, search, remove!
+import Base.size
+
+type Node
+    data::Any
+    next::Union(Nothing,Node)
+    Node(data) = new(data,nothing)
+end
+
+type UnorderedList
+    head::Union(Nothing, Node)
+    UnorderedList() = new(nothing)
+end
+
+function add!(list::UnorderedList, value)
+    temp = Node(value)
+    temp.next = list.head
+    list.head = temp
+end
+
+function size(list::UnorderedList)
+    n_nodes = 0
+    current = list.head
+    while current != nothing
+        n_nodes += 1
+        current = current.next
+    end
+    return n_nodes 
+end
+
+function search(list::UnorderedList, item)
+    current = list.head
+    while current != nothing
+        if current.data == item
+            return true
+        else
+            current = current.next
+        end
+    end
+    return false 
+end
+
+function remove!(list::UnorderedList, item)
+    previous = list.head
+    current = previous.next
+
+    while current.data != item
+        previous = current
+        current = current.next
+    end
+
+    previous.next = current.next 
+end
+
+
+end
+
