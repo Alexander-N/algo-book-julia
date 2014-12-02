@@ -105,7 +105,7 @@ end
 
 module myUnorderedList
 export Node, UnorderedList, add!, size, search, remove!
-import Base.size
+import Base.size, Base.isempty
 
 type Node
     data::Any
@@ -118,11 +118,14 @@ type UnorderedList
     UnorderedList() = new(nothing)
 end
 
-function add!(list::UnorderedList, value)
-    temp = Node(value)
-    temp.next = list.head
-    list.head = temp
+function isempty(list::UnorderedList)
+    if list.head == nothing
+        return true
+    else
+        return false
+    end
 end
+    
 
 function size(list::UnorderedList)
     n_nodes = 0
@@ -132,6 +135,12 @@ function size(list::UnorderedList)
         current = current.next
     end
     return n_nodes 
+end
+
+function add!(list::UnorderedList, value)
+    temp = Node(value)
+    temp.next = list.head
+    list.head = temp
 end
 
 function search(list::UnorderedList, item)
