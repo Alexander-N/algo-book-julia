@@ -170,3 +170,85 @@ end
 
 end
 
+module myOrderedList
+export Node, OrderedList, add!, size, search, remove!
+import Base.size, Base.isempty
+
+type Node
+    data::Any
+    next::Union(Nothing,Node)
+    Node(data) = new(data,nothing)
+end
+
+type OrderedList
+    head::Union(Nothing, Node)
+    OrderedList() = new(nothing)
+end
+
+function isempty(list::OrderedList)
+    if list.head == nothing
+        return true
+    else
+        return false
+    end
+end
+
+function size(list::OrderedList)
+    n_nodes = 0
+    current = list.head
+    while current != nothing
+        n_nodes += 1
+        current = current.next
+    end
+    return n_nodes 
+end
+
+function add!(list::OrderedList, value)
+    previous = nothing
+    current = list.head
+
+    while (current != nothing) && (current.data < value)
+        previous = current
+        current = current.next
+    end
+
+    temp = Node(value)
+    if previous == nothing
+        temp.next = list.head
+        list.head = temp
+    else
+        previous.next = temp
+        temp.next = current
+    end
+end
+
+function search(list::OrderedList, item)
+    current = list.head
+    while current != nothing
+        if current.data == item
+            return true
+        else
+            if current.data > item
+                return false
+            else
+                current = current.next
+            end
+        end
+    end
+    return false 
+end
+
+function remove!(list::OrderedList, item)
+    previous = list.head
+    current = previous.next
+
+    while current.data != item
+        previous = current
+        current = current.next
+    end
+
+    previous.next = current.next 
+end
+
+
+end
