@@ -44,13 +44,13 @@ type Maze
         self.t = turtle.Turtle()
         self.t[:shape]("turtle")
         self.wn = turtle.Screen()
-        self.wn[:setworldcoordinates](-(columnsInMaze-1)/2-.5,-(rowsInMaze-1)/2-.5,(columnsInMaze-1)/2+.5,(rowsInMaze-1)/2+.5)
+        self.wn[:setworldcoordinates](-columnsInMaze/2+1,-rowsInMaze/2,columnsInMaze/2+0.5,rowsInMaze/2-0.75)
         return self
     end
 end
 
 function drawMaze(maze::Maze)
-    maze.t[:speed](50)
+    maze.t[:speed](500)
     for y in 1:maze.rowsInMaze
         for x in 1:maze.columnsInMaze
             if maze.mazelist[y][x] == OBSTACLE
