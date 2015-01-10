@@ -14,6 +14,8 @@ type Maze
     yTranslate
     t
     wn
+    startRow
+    startCol
     function Maze(mazeFileName)
         self = new()
         rowsInMaze = 0
@@ -27,8 +29,8 @@ type Maze
                 for ch in line[1:end-1]
                     push!(rowList, ch)
                     if ch == 'S'
-                        startRow = rowsInMaze
-                        startCol = col
+                        self.startRow = rowsInMaze
+                        self.startCol = col
                     end
                     col = col + 1
                 end
@@ -50,7 +52,7 @@ type Maze
 end
 
 function drawMaze(maze::Maze)
-    maze.t[:speed](500)
+    maze.t[:speed](5000)
     for y in 1:maze.rowsInMaze
         for x in 1:maze.columnsInMaze
             if maze.mazelist[y][x] == OBSTACLE
@@ -77,6 +79,18 @@ function drawCenteredBox(t, x, y, color)
     t[:end_fill]()
 end
 
+function moveTurtle(t, x, y)
+end
+
+function updatePosition(maze, row, col, val=nothing)
+    if val != nothing
+        maze.mazelist[row][col] = val
+    end
+    #moveTurtle(maze.t, col, row)
+end
+
+
 myMaze = Maze("maze2.txt")
 drawMaze(myMaze)
+updatePosition(myMaze, myMaze.startRow, myMaze.startCol, 'O')
 myMaze.wn[:exitonclick]()
