@@ -79,14 +79,36 @@ function drawCenteredBox(t, x, y, color)
     t[:end_fill]()
 end
 
-function moveTurtle(t, x, y)
+function moveTurtle(maze, x, y)
+    maze.t[:up]()
+    maze.t[:setheading](maze.t[:towards](x+maze.xTranslate,-y+maze.yTranslate))
+    maze.t[:goto](x+maze.xTranslate,-y+maze.yTranslate)
+end
+
+function dropBreadCrump(t, color)
 end
 
 function updatePosition(maze, row, col, val=nothing)
     if val != nothing
         maze.mazelist[row][col] = val
     end
-    #moveTurtle(maze.t, col, row)
+    moveTurtle(maze, col, row)
+    if val == PART_OF_PATH
+        color = "green"
+    elseif val == OBSTACLE
+        color = "red"
+    elseif val == TRIED
+        color = "black"
+    elseif val == DEAD_END
+        color = "red"
+    else
+        color = nothing 
+    end
+
+    if color != nothing
+        dropBreadCrump(maze.t, color)
+    end
+    
 end
 
 
