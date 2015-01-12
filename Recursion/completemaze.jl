@@ -86,6 +86,7 @@ function moveTurtle(maze, x, y)
 end
 
 function dropBreadCrump(t, color)
+    t[:dot](10, color)
 end
 
 function updatePosition(maze, row, col, val=nothing)
@@ -111,8 +112,23 @@ function updatePosition(maze, row, col, val=nothing)
     
 end
 
+function searchFrom(maze, startRow, startColumn)
+    # try each of four directions from this point until we find a way out.
+    # base Case return values:
+    # 1. We have run into an obstacle, return false
+
+
+    # 2. We have found a square that has already been explored 
+
+    # 3. We have found an outside edge not occupied by an obstacle
+
+    # Otherwise, use logical short circuiting to try each direction
+    # in turn (if needed)
+end
+
 
 myMaze = Maze("maze2.txt")
 drawMaze(myMaze)
 updatePosition(myMaze, myMaze.startRow, myMaze.startCol, 'O')
 myMaze.wn[:exitonclick]()
+searchFrom(myMaze, myMaze.startRow, myMaze.startCol)
