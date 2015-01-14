@@ -112,16 +112,27 @@ function updatePosition(maze, row, col, val=nothing)
     
 end
 
+function isExit(maze, row, col)
+    return (row == 1 ||
+            row == maze.rowsInMaze ||
+            col == 1 ||
+            col == maze.columnsInMaze)
+end
+
 function searchFrom(maze, startRow, startColumn)
     # try each of four directions from this point until we find a way out.
     # base Case return values:
     # 1. We have run into an obstacle, return false
-
-
+    updatePosition(maze, startRow, startColumn)
+    if maze.mazelist[startRow][startColumn] == OBSTACLE
+        return false
     # 2. We have found a square that has already been explored 
-
+    elseif maze.mazelist[startRow][startColumn] == TRIED
+        return false
     # 3. We have found an outside edge not occupied by an obstacle
-
+    elseif isExit(maze, startRow, startColumn)
+        return true
+    end
     # Otherwise, use logical short circuiting to try each direction
     # in turn (if needed)
 end
