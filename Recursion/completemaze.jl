@@ -29,8 +29,8 @@ type Maze
                 for ch in line[1:end-1]
                     push!(rowList, ch)
                     if ch == 'S'
-                        self.startRow = rowsInMaze
-                        self.startCol = col
+                        self.startRow = rowsInMaze+1
+                        self.startCol = col+1
                     end
                     col = col + 1
                 end
@@ -52,7 +52,7 @@ type Maze
 end
 
 function drawMaze(maze::Maze)
-    maze.t[:speed](5000)
+    maze.t[:speed](1000)
     for y in 1:maze.rowsInMaze
         for x in 1:maze.columnsInMaze
             if maze.mazelist[y][x] == OBSTACLE
@@ -81,6 +81,7 @@ end
 
 function moveTurtle(maze, x, y)
     maze.t[:up]()
+    #likely error here
     maze.t[:setheading](maze.t[:towards](x+maze.xTranslate,-y+maze.yTranslate))
     maze.t[:goto](x+maze.xTranslate,-y+maze.yTranslate)
 end
@@ -126,20 +127,36 @@ function searchFrom(maze, startRow, startColumn)
     updatePosition(maze, startRow, startColumn)
     if maze.mazelist[startRow][startColumn] == OBSTACLE
         return false
-    # 2. We have found a square that has already been explored 
-    elseif maze.mazelist[startRow][startColumn] == TRIED
+    end
+    
+    # 2. We have found a square that has already been explored or is a dead end
+    if (maze.mazelist[startRow][startColumn] == TRIED ||
+            maze.mazelist[startRow][startColumn] == DEAD_END)
         return false
+    end
     # 3. We have found an outside edge not occupied by an obstacle
-    elseif isExit(maze, startRow, startColumn)
+    if isExit(maze, startRow, startColumn)
+        updatePosition(maze, startRow, startColumn, PART_OF_PATH)
         return true
     end
+    updatePosition(maze, startRow, startColumn, TRIED)
     # Otherwise, use logical short circuiting to try each direction
     # in turn (if needed)
+    found = (searchFrom(maze, startRow-1, startColumn) ||
+             searchFrom(maze, startRow+1, startColumn) ||
+             searchFrom(maze, startRow, startColumn-1) ||
+             searchFrom(maze, startRow, startColumn+1))
+    if found == true
+        updatePosition(maze, startRow, startColumn, PART_OF_PATH)
+    else
+        updatePosition(maze, startRow, startColumn, DEAD_END)
+    end
+    return found
 end
 
 
 myMaze = Maze("maze2.txt")
 drawMaze(myMaze)
 updatePosition(myMaze, myMaze.startRow, myMaze.startCol, 'O')
-myMaze.wn[:exitonclick]()
 searchFrom(myMaze, myMaze.startRow, myMaze.startCol)
+myMaze.wn[:exitonclick]()
